@@ -1,12 +1,16 @@
 import pygame
 from pygame import K_UP, K_DOWN, K_LEFT, K_RIGHT
 from snake.game import Game
-from ai.filtering import fittest_quarter
+from ai.filtering import *
 from ai.population import Population
 from ai.network_individual import NetworkIndividual
+from math import exp
 
 pygame.font.init()
 pygame.init()
+
+pygame.event.set_blocked(None)
+pygame.event.set_allowed(pygame.QUIT)
 
 BACKGROUND = (0, 0, 0)
 
@@ -18,7 +22,7 @@ RIGHT = [1, 0]
 WIDTH = 20
 HEIGHT = 15
 
-N = 50
+N = 500
 
 size = (800, 600)
 screen = pygame.display.set_mode(size)
@@ -29,19 +33,20 @@ games = [Game([WIDTH, HEIGHT], opacity=51) for _ in range(N)]
 
 clock = pygame.time.Clock()
 
-turn_length = 5
+turn_length = 1
 turn_progress = 0
 
 done = False
+
 
 '''AI variables
 '''
 
 def individual_generator():
-    return NetworkIndividual(WIDTH *HEIGHT)
+    return NetworkIndividual(WIDTH * HEIGHT)
 
 def fitness(an_individual):
-    return an_individual.score
+    return an_individual.score * exp(-an_individual.turns)
 
 population = Population(N, individual_generator, fitness, fittest_quarter)
 
@@ -113,7 +118,7 @@ while not done:
             game.draw()
 
         # Render score
-        text_surface = font.render("Generation: {}  |  Turn: {}  |  Max Score: {}".format(generations, max(game.turns for game in games), max(game.score for game in games)), False, (255, 255, 255))
+        text_surface = font.render("Generation: {}  |  Turn: {}  |  Max Score: {}  |  Avg Score: {}".format(generations, max(game.turns for game in games), max(game.score for game in games), sum(game.score for game in games) / N), False, (255, 255, 255))
 
         screen.blit(text_surface, (0, 0))
 
@@ -131,7 +136,5 @@ while not done:
     generations += 1
     population.filter_population()
     population.reproduce()
-
-    
 
 pygame.quit()

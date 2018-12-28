@@ -2,7 +2,7 @@ from random import randint, random
 from .network import Network
 from .neuron import SigmoidNeuron
 
-mutation_rate = 0.2
+mutation_rate = 0.35
 
 '''Clase que representa una solución al problema de N reinas en un tablero de NxN.
 La solución se representa simplemente con las posiciones de las N reinas.
@@ -16,7 +16,7 @@ class NetworkIndividual:
         Cada individuo registra su propio puntaje y tiempo de vida, para luego ser usado como fitness
         '''
         self.n = n
-        self.network = Network([self.n, 16, 4])
+        self.network = Network([self.n, 8, 4])
         self.score = 0
         self.lifetime = 0
 
@@ -25,18 +25,18 @@ class NetworkIndividual:
         another_list_repr = another_network.network.to_list()
 
         # the breakpoint is one of all the nodes in the network
-        breakpoint = randint(0, self.n + 16 + 4)
+        breakpoint = randint(0, 12)
 
         child_neurons = list_repr[:breakpoint] + another_list_repr[breakpoint:]
 
         for i in range(len(child_neurons)):
             if random() < mutation_rate:
                 # First layer, n inputs
-                if i < 16:
+                if i < 8:
                     layer_len = self.n
                 # Seond layer, 16 inputs
                 else:
-                    layer_len = 16
+                    layer_len = 8
                 # Replace the previous neuron with a new, random one
                 child_neurons[i] = SigmoidNeuron(layer_len)
 
