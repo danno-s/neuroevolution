@@ -1,0 +1,98 @@
+% Template:     Informe/Reporte LaTeX
+% Documento:    Archivo principal
+% Versión:      4.7.4 (04/04/2018)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        Facultad de Ciencias Físicas y Matemáticas
+%        Universidad de Chile
+%        pablo.pizarro@ing.uchile.cl, ppizarror.com
+%
+% Manual template: [http://latex.ppizarror.com/Template-Informe/]
+% Licencia MIT:    [https://opensource.org/licenses/MIT/]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[letterpaper,11pt]{article} % Articulo tamaño carta, 11pt
+\usepackage[utf8]{inputenc} % Codificación UTF-8
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\titulodelinforme {Título}
+\def\temaatratar {Tema a Tratar}
+
+\def\autordeldocumento {Daniel Soto}
+\def\nombredelcurso {Redes Neuronales y Programación Genética}
+\def\codigodelcurso {CC5114}
+
+\def\nombreuniversidad {Universidad de Chile}
+\def\nombrefacultad {Facultad de Ciencias Físicas y Matemáticas}
+\def\departamentouniversidad {Departamento de Ciencias de la Computación}
+\def\imagendepartamento {departamentos/dcc}
+\def\imagendepartamentoescala {0.2}
+\def\localizacionuniversidad {Santiago, Chile}
+
+% INTEGRANTES, PROFESORES Y FECHAS
+\def\tablaintegrantes {
+\begin{tabular}{ll}
+	Alumno:
+		& \begin{tabular}[t]{@{}l@{}}
+			Daniel Soto
+		\end{tabular} \\
+  Profesor:
+    & \begin{tabular}[t]{@{}l@{}}
+      Alexander Bergel \\
+    \end{tabular} \\
+  Auxiliar:
+    & \begin{tabular}[t]{@{}l@{}}
+      Juan-Pablo Silva \\
+    \end{tabular} \\
+  Ayudantes:
+    & \begin{tabular}[t]{@{}l@{}}
+      Alonso Reyes \\
+       Gabriel Chandia \\
+    \end{tabular} \\
+	\multicolumn{2}{l}{Fecha de entrega: \today} \\
+	\multicolumn{2}{l}{\localizacionuniversidad}
+\end{tabular}
+}
+
+% CONFIGURACIONES
+\input{lib/config}
+
+% IMPORTACIÓN DE LIBRERÍAS
+\input{lib/imports}
+
+% IMPORTACIÓN DE FUNCIONES
+\input{lib/function/core}
+\input{lib/function/elements}
+\input{lib/function/equation}
+\input{lib/function/image}
+\input{lib/function/title}
+
+% IMPORTACIÓN DE ENTORNOS
+\input{lib/environments}
+
+% IMPORTACIÓN DE ESTILOS
+\input{lib/styles}
+
+% CONFIGURACIÓN INICIAL DEL DOCUMENTO
+\input{lib/initconf}
+
+% INICIO DE LAS PÁGINAS
+\begin{document}
+
+% PORTADA
+\input{lib/portrait}
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\input{lib/pageconf}
+
+% TABLA DE CONTENIDOS - ÍNDICE
+\input{lib/index} % Índice, se puede borrar
+
+% CONFIGURACIONES FINALES
+\input{lib/finalconf}
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+% FIN DEL DOCUMENTO
+\end{document}
