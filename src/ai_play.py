@@ -5,6 +5,7 @@ from ai.filtering import fittest_quarter
 from ai.population import Population
 from ai.network_individual import NetworkIndividual
 
+pygame.font.init()
 pygame.init()
 
 BACKGROUND = (0, 0, 0)
@@ -17,16 +18,18 @@ RIGHT = [1, 0]
 WIDTH = 20
 HEIGHT = 15
 
-N = 10
+N = 50
 
 size = (800, 600)
 screen = pygame.display.set_mode(size)
+
+font = pygame.font.SysFont('Times New Roman', 30)
 
 games = [Game([WIDTH, HEIGHT], opacity=51) for _ in range(N)]
 
 clock = pygame.time.Clock()
 
-turn_length = 1
+turn_length = 5
 turn_progress = 0
 
 done = False
@@ -56,6 +59,9 @@ while not done:
     # Run the simulations of each network (fitness evaluation)
     # While at least one game isn't finished
     while any(not game.over for game in games) and not done:
+        if max(game.turns for game in games) > 500:
+            break
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
@@ -105,6 +111,11 @@ while not done:
 
         for game in filter(lambda game: not game.over, games):
             game.draw()
+
+        # Render score
+        text_surface = font.render("Generation: {}  |  Turn: {}  |  Max Score: {}".format(generations, max(game.turns for game in games), max(game.score for game in games)), False, (255, 255, 255))
+
+        screen.blit(text_surface, (0, 0))
 
         pygame.display.flip()
     

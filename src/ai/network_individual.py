@@ -1,5 +1,6 @@
 from random import randint, random
 from .network import Network
+from .neuron import SigmoidNeuron
 
 mutation_rate = 0.2
 
@@ -28,7 +29,19 @@ class NetworkIndividual:
 
         child_neurons = list_repr[:breakpoint] + another_list_repr[breakpoint:]
 
+        for i in range(len(child_neurons)):
+            if random() < mutation_rate:
+                # First layer, n inputs
+                if i < 16:
+                    layer_len = self.n
+                # Seond layer, 16 inputs
+                else:
+                    layer_len = 16
+                # Replace the previous neuron with a new, random one
+                child_neurons[i] = SigmoidNeuron(layer_len)
+
         child = NetworkIndividual(self.n)
+
         child.network.set_neurons(child_neurons)
 
         return child

@@ -2,6 +2,7 @@ import pygame
 from pygame import K_UP, K_DOWN, K_LEFT, K_RIGHT
 from snake.game import Game
 
+pygame.font.init()
 pygame.init()
 
 BACKGROUND = (0, 0, 0)
@@ -16,6 +17,8 @@ size = (800, 600)
 screen = pygame.display.set_mode(size)
 
 game = Game([20, 15])
+
+font = pygame.font.SysFont('Times New Roman', 30)
 
 clock = pygame.time.Clock()
 
@@ -50,8 +53,12 @@ while not game.over:
 
     game.draw()
 
-    pygame.display.flip()
+    # Render score
+    text_surface = font.render("Score: {}".format(game.score), False, (255, 255, 255))
 
+    screen.blit(text_surface, (0, 0))
+
+    pygame.display.flip()
 
     # Set a fixed 60 FPS
     clock.tick(60)
