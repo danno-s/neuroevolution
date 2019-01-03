@@ -28,7 +28,7 @@ screen = pygame.display.set_mode(size)
 
 font = pygame.font.SysFont('Times New Roman', 30)
 
-games = [Game([WIDTH, HEIGHT], opacity=51) for _ in range(N)]
+games = [Game([WIDTH, HEIGHT], opacity=26) for _ in range(N)]
 
 clock = pygame.time.Clock()
 
@@ -36,6 +36,9 @@ turn_length = 1
 turn_progress = 0
 
 done = False
+
+max_scores = []
+avg_scores = []
 
 
 '''AI variables
@@ -53,6 +56,9 @@ generations = 0
 
 # For all the time we want
 while not done:
+    if generations >= 100:
+        break
+
     # Before starting we make a new set of games.
     games = [Game([WIDTH, HEIGHT], opacity=51) for _ in range(N)]
 
@@ -123,6 +129,10 @@ while not done:
 
         pygame.display.flip()
     
+    # Record max and avg scores
+    max_scores.append(max(game.score for game in games))
+    avg_scores.append(sum(game.score for game in games) / N)
+    
     # At the end we store the values of the game in the individual
     for individual, game in zip(population.individuals, games):
         individual.score = game.score
@@ -135,5 +145,11 @@ while not done:
     generations += 1
     population.filter_population()
     population.reproduce()
+
+f = open("scores.csv", "w+")
+f.write("Generation,Max,Avg\n")
+for i, mx_avg in enumerate(zip(max_scores, avg_scores)):
+    f.write("{},{},{}\n".format(i, mx_avg[0], mx_avg[1]))
+f.close()
 
 pygame.quit()
