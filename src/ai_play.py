@@ -1,5 +1,4 @@
 import pygame
-from pygame import K_UP, K_DOWN, K_LEFT, K_RIGHT
 from snake.game import Game
 from ai.filtering import *
 from ai.population import Population
